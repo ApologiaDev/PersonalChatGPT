@@ -1,5 +1,5 @@
 python-dotenv
 openai
-gpt_index==0.4.24
-PyPDF2
+gpt_index
+pypdf
 PyCryptodome

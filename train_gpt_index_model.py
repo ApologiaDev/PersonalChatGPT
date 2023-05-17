@@ -1,9 +1,10 @@
 
 import os
 from argparse import ArgumentParser
+from time import time
 
 from dotenv import load_dotenv
-from gpt_index import SimpleDirectoryReader, GPTSimpleVectorIndex, LLMPredictor, PromptHelper
+from llama_index import SimpleDirectoryReader, GPTVectorStoreIndex, LLMPredictor, PromptHelper
 from langchain.chat_models import ChatOpenAI
 
 
@@ -12,7 +13,7 @@ load_dotenv()
 os.environ['OPENAI_API_KEY'] = os.getenv('OPENAIKEY')
 
 
-def construct_index(directory_path, output_index_path):
+def construct_index(directory_path, outputdir):
     max_input_size = 4096
     num_outputs = 512
     max_chunk_overlap = 20
@@ -24,9 +25,9 @@ def construct_index(directory_path, output_index_path):
 
     documents = SimpleDirectoryReader(directory_path).load_data()
 
-    index = GPTSimpleVectorIndex(documents, llm_predictor=llm_predictor, prompt_helper=prompt_helper)
+    index = GPTVectorStoreIndex.from_documents(documents, llm_predictor=llm_predictor, prompt_helper=prompt_helper)
 
-    index.save_to_disk(output_index_path)
+    index.storage_context.persist(persist_dir=outputdir)
 
     return index
 
@@ -34,10 +35,13 @@ def construct_index(directory_path, output_index_path):
 def get_argparser():
     argparser = ArgumentParser(description='Train GPT index from documents')
     argparser.add_argument('corpusdir', help='directory of the training data')
-    argparser.add_argument('outputpath', help='path of output index (.json)')
+    argparser.add_argument('outputdir', help='directory of output index')
     return argparser
 
 
 if __name__ == '__main__':
     args = get_argparser().parse_args()
-    _ = construct_index(args.corpusdir, args.outputpath)
+    starttime = time()
+    _ = construct_index(args.corpusdir, args.outputdir)
+    endtime = time()
+    print('Time elapsed: {} sec'.format(endtime-starttime))
