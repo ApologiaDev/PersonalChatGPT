@@ -6,7 +6,7 @@ First, clone the git repository:
 
 ```bazaar
 cd <targetdir>
-git clone https://github.com/stephenhky/PersonalChatGPT.git
+git clone https://github.com/ApologiaDev/PersonalChatGPT
 ```
 
 Then go to the directory.
