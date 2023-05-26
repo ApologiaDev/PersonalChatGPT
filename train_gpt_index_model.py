@@ -54,7 +54,7 @@ if __name__ == '__main__':
     print('Time elapsed: {} sec'.format(endtime-starttime))
 
     # write book file name
-    f = open(os.path.join(args.outputdir, 'traincorpus.txt'))
+    f = open(os.path.join(args.outputdir, 'traincorpus.txt'), 'w')
     for bookfilename in get_directory_books(args.corpusdir):
         f.write(bookfilename+'\n')
     f.close()
