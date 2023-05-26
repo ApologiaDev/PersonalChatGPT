@@ -52,3 +52,4 @@ if __name__ == '__main__':
         else:
             reply = get_reply(inputtext, history)
             print(reply)
+            print("=====")

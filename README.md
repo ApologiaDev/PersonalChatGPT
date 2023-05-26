@@ -79,3 +79,18 @@ Then go to the directory of the git repository. Then type
 python run_customized_gpt.py <modeldir>
 ```
 
+## Run Benchmark Test
+
+First, activate your conda environment (if you have not done so).
+Then go to the directory of the git repository. Then type
+
+```bazaar
+python batch_run_benchmark_questions.py <modeldir> <exceloutputpath>
+```
+
+Then the answers to the benchmark questions is output as an Excel file.
+
+All the benchmark questions are found under `benchmark_questions` folder.
+YOu can add questions. Each question is stored in a JSON file, and the question
+is in the field `"question:`. All other fields in the JSON files are ignored.
+

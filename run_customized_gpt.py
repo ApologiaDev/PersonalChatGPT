@@ -3,7 +3,7 @@ from argparse import ArgumentParser
 import os
 
 from dotenv import load_dotenv
-from llama_index import GPTVectorStoreIndex, StorageContext, load_index_from_storage
+from llama_index import StorageContext, load_index_from_storage
 
 
 load_dotenv()
@@ -36,3 +36,4 @@ if __name__ == '__main__':
         else:
             reply = get_response(inputtext, query_engine)
             print(reply)
+            print("=====")

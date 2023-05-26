@@ -3,3 +3,6 @@ openai
 gpt_index
 pypdf
 PyCryptodome
+pandas
+openpyxl
+tqdm

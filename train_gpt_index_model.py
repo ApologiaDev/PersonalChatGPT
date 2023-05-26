@@ -2,6 +2,7 @@
 import os
 from argparse import ArgumentParser
 from time import time
+from glob import glob
 
 from dotenv import load_dotenv
 from llama_index import SimpleDirectoryReader, GPTVectorStoreIndex, LLMPredictor, PromptHelper
@@ -39,9 +40,21 @@ def get_argparser():
     return argparser
 
 
+def get_directory_books(corpusdir):
+    for bookpath in glob(os.path.join(corpusdir, "*.pdf")):
+        bookfilename = os.path.basename(bookpath)
+        yield bookfilename
+
+
 if __name__ == '__main__':
     args = get_argparser().parse_args()
     starttime = time()
     _ = construct_index(args.corpusdir, args.outputdir)
     endtime = time()
     print('Time elapsed: {} sec'.format(endtime-starttime))
+
+    # write book file name
+    f = open(os.path.join(args.outputdir, 'traincorpus.txt'), 'w')
+    for bookfilename in get_directory_books(args.corpusdir):
+        f.write(bookfilename+'\n')
+    f.close()
